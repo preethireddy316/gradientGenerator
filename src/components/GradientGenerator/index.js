@@ -18,10 +18,11 @@ class GradientGenerator extends Component {
     activeDirectionId: gradientDirectionsList[0].directionId,
     color1: '#8ae323',
     color2: '#014f7b',
+    isClicked:false
   }
 
   onDirectionChange = id => {
-    this.setState({activeDirectionId: id})
+    this.setState({activeDirectionId: id,isClicked:true})
   }
 
   getVal = () => {
@@ -33,11 +34,11 @@ class GradientGenerator extends Component {
   }
 
   changeColor1 = event => {
-    this.setState({color1: event.target.value})
+    this.setState({color1: event.target.value,isClicked:false})
   }
 
   changeColor2 = event => {
-    this.setState({color2: event.target.value})
+    this.setState({color2: event.target.value,isClicked:false})
   }
 
   submitForm = event => {
@@ -47,9 +48,9 @@ class GradientGenerator extends Component {
 
   render() {
     const {color1, color2, activeDirectionId} = this.state
-    const prop = {val:{this.getVal()}
-        color1:{color1}
-        color2:{color2}}
+    const prop = {val:this.getVal(),
+        color1:color1,
+        color2:color2,}
     return (
       <Container
         {isClicked && {...prop}}
