@@ -1,5 +1,5 @@
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable prettier/prettier */
+// Write your code here
 import {Component} from 'react'
 
 import {Container} from './styledComponents'
@@ -12,68 +12,59 @@ const gradientDirectionsList = [
   {directionId: 'RIGHT', value: 'right', displayText: 'Right'},
   {directionId: 'LEFT', value: 'left', displayText: 'Left'},
 ]
-// Write your code here
+
 class GradientGenerator extends Component {
   state = {
-    activeDirectionId: gradientDirectionsList[0].directionId,
+    activeDirectionValue: gradientDirectionsList[0].value,
     color1: '#8ae323',
     color2: '#014f7b',
-    isClicked:false
+    gradientvalue:`to ${gradientDirectionsList[0].value},#8ae323,#014f7b`
+   
   }
 
-  onDirectionChange = id => {
-    this.setState({activeDirectionId: id,isClicked:true})
+  onDirectionChange = value => {
+    this.setState({activeDirectionValue: value,})
   }
 
-  getVal = () => {
-    const {activeDirectionId} = this.state
-    const activeObj = gradientDirectionsList.find(
-      each => each.directionId === activeDirectionId,
-    )
-    return activeObj.value
-  }
 
   changeColor1 = event => {
-    this.setState({color1: event.target.value,isClicked:false})
+    this.setState({color1: event.target.value, })
   }
 
   changeColor2 = event => {
-    this.setState({color2: event.target.value,isClicked:false})
+    this.setState({color2: event.target.value, })
   }
 
-  submitForm = event => {
-    event.preventDefault()
-    this.setState({isClicked:true})
+  clickGenerate=()=> {
+    const {color1, color2, activeDirectionValue} = this.state
+    this.setState({gradientvalue:`to ${activeDirectionValue},${color1},${color2}`})
   }
 
   render() {
-    const {color1, color2, activeDirectionId} = this.state
-    const prop = {val:this.getVal(),
-        color1:color1,
-        color2:color2,}
+    const {gradientvalue,color1,color2,activeDirectionValue}=this.state
     return (
       <Container
-        {isClicked && {...prop}}
-        testid="gradientGenerator"
+        value={gradientvalue}
+        data-testid="gradientGenerator"
       >
-        <form onSubmit={this.submitForm}>
-          <h1>generate</h1>
-          <p>choose</p>
+          <h1>Generate a CSS Color Gradient</h1>
+          <p>Choose Direction</p>
           <ul>
             {gradientDirectionsList.map(each => (
               <GradientDirectionItem
                 key={each.directionId}
                 details={each}
                 onDirectionChange={this.onDirectionChange}
-                activeDirectionId={activeDirectionId}
+                activeDirectionValue={activeDirectionValue}
               />
             ))}
           </ul>
-          <p>pick</p>
-          <input type="color" onChange={this.changeColor1} />
-          <input type="color" onChange={this.changeColor2} />
-          <button type="submit">Generate</button>
-        </form>
+          <p>Pick the Colors</p>
+          <input type="color" value ={color1} onChange={this.changeColor1} />
+          <p>{color1}</p>
+          <input type="color" value = {color2} onChange={this.changeColor2} />
+          <p>{color2}</p>
+          <button type="button" onClick={this.clickGenerate}>Generate</button>
       </Container>
     )
   }
