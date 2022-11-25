@@ -1,12 +1,15 @@
+// Write your code here
+/* eslint-disable prettier/prettier */
 import {Button} from './styledComponents'
 
 const GradientDirectionItem = props => {
-  const {activeDirectionId, onDirectionChange, details} = props
-  const {directionId, displayText} = details
+  const {activeDirectionValue, onDirectionChange, details} = props
+  const {displayText,value} = details
+
   const directionChange = () => {
-    onDirectionChange(directionId)
+    onDirectionChange(value)
   }
-  const cls = activeDirectionId === directionId
+  const cls = activeDirectionValue === value
   return (
     <li>
       <Button type="button" opacity={cls} onClick={directionChange}>
